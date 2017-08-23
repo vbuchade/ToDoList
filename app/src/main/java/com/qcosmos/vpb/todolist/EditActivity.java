@@ -27,10 +27,17 @@ public class EditActivity extends AppCompatActivity {
         edTxtItem.setCursorVisible(true);
         edTxtItem.setSelection(itemName.length());
 
+        edTxtItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showKeyboard(v, EditActivity.this);
+            }
+        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utils.dismissKeyboard(v, EditActivity.this);
                 onSubmit(itemIndex);
             }
         });

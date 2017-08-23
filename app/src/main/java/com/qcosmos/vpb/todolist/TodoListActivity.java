@@ -41,9 +41,17 @@ public class TodoListActivity extends AppCompatActivity {
         edEditText = (EditText) findViewById(R.id.etEditText);
         btnAddItem = (Button) findViewById(R.id.btnAddItem);
 
+        edEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showKeyboard(v, TodoListActivity.this);
+            }
+        });
+
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utils.dismissKeyboard(v, TodoListActivity.this);
                 onAddItem(v);
             }
         });

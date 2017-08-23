@@ -13,35 +13,38 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/edTxtItem"
-        android:layout_alignStart="@+id/edTxtItem"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:id="@+id/txtVwEnterItemLabel"
         android:text="@string/edit_item"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:textStyle="normal|bold" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:layout_marginLeft="46dp"
-        android:layout_marginStart="46dp"
         android:id="@+id/edTxtItem"
         android:text="Enter text here"
         android:hint="Update the todo item here"
+        android:imeOptions="actionDone"
+        android:layout_marginTop="25dp"
         android:layout_below="@+id/txtVwEnterItemLabel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="49dp" />
+        android:layout_alignLeft="@+id/txtVwEnterItemLabel"
+        android:layout_alignStart="@+id/txtVwEnterItemLabel" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnSaveItem"
         android:text="@string/save"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/edTxtItem"
         android:layout_alignLeft="@+id/edTxtItem"
         android:layout_alignStart="@+id/edTxtItem" />
 </RelativeLayout>
