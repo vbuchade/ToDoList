@@ -96,9 +96,16 @@ public class TodoListActivity extends AppCompatActivity {
         arrayTodoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoItems); // TODO: check
     }
 
+    //TODO: remove view if its not needed
     private void onAddItem(View view) {
         //view in this case will be button
-        arrayTodoAdapter.add(edEditText.getText().toString());
+
+        String itemValue = edEditText.getText().toString();
+        if (itemValue == null || itemValue.trim().isEmpty()) {
+            edEditText.setText("");
+            return;
+        }
+        arrayTodoAdapter.add(itemValue.trim());
         edEditText.setText("");
         writeItems();
     }
@@ -113,7 +120,7 @@ public class TodoListActivity extends AppCompatActivity {
         }
     }
 
-    public void onUpdateItem(String newVal, int index) {
+    private void onUpdateItem(String newVal, int index) {
         todoItems.remove(index);
         todoItems.add(index, newVal);
         arrayTodoAdapter.notifyDataSetChanged();

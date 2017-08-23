@@ -37,16 +37,22 @@ public class EditActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String itemValue = edTxtItem.getText().toString();
+                if (itemValue == null || itemValue.trim().isEmpty()) {
+                    edTxtItem.setText("");
+                    return;
+                }
+
                 Utils.dismissKeyboard(v, EditActivity.this);
-                onSubmit(itemIndex);
+                onSubmit(itemIndex, itemValue.trim());
             }
         });
 
     }
 
-    private void onSubmit(int itemIndex) {
+    private void onSubmit(int itemIndex, String itemValue) {
         Intent data = new Intent();
-        data.putExtra(GlobalData.ITEM_KEY, edTxtItem.getText().toString());
+        data.putExtra(GlobalData.ITEM_KEY, itemValue);
         data.putExtra(GlobalData.INDEX_KEY, itemIndex);
         setResult(RESULT_OK, data);
         this.finish();
