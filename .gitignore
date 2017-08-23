@@ -32,6 +32,23 @@ proguard/
 # Android Studio captures folder
 captures/
 
+*.ipr
+*.iws
+build/**
+.idea/**
+import-summary.txt
+.project
+.metadata
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+.classpath
+.settings/
+.loadpath
+
 # Intellij
 *.iml
 .idea
@@ -40,6 +57,7 @@ captures/
 .idea/gradle.xml
 .idea/dictionaries
 .idea/libraries
+.idea/**
 
 # Keystore files
 *.jks
