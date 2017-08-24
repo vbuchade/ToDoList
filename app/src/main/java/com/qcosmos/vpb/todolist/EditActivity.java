@@ -18,7 +18,7 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         final int itemIndex = getIntent().getIntExtra(GlobalData.INDEX_KEY, GlobalData.ILLEGAL_INDEX);
-        final String itemName = getIntent().getStringExtra(GlobalData.ITEM_KEY);
+        final String itemName = ((ToDoItem)getIntent().getSerializableExtra(GlobalData.ITEM_KEY)).item;
 
         saveBtn = (Button) findViewById(R.id.btnSaveItem);
         edTxtItem = (EditText) findViewById(R.id.edTxtItem);

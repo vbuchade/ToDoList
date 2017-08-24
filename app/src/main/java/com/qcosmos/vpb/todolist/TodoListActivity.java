@@ -5,25 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import org.apache.commons.io.FileUtils;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TodoListActivity extends AppCompatActivity {
 
-    //ArrayList for list of to-do items
-    ArrayList<String> todoItems;
-
-    //ArrayAdapter to map to-do-item-list to list-view
-    ArrayAdapter<String> arrayTodoAdapter;
+    //CustomAdapter to map to-do-item-list to list-view
+    ToDoListAdapter toDoListAdapter;
 
     ListView lvItems;
     EditText edEditText;
@@ -37,9 +33,10 @@ public class TodoListActivity extends AppCompatActivity {
         populateTodoItems();
 
         lvItems = (ListView) findViewById(R.id.lvItems);
-        lvItems.setAdapter(arrayTodoAdapter);
         edEditText = (EditText) findViewById(R.id.etEditText);
         btnAddItem = (Button) findViewById(R.id.btnAddItem);
+
+        lvItems.setAdapter(toDoListAdapter);
 
         edEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +49,7 @@ public class TodoListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Utils.dismissKeyboard(v, TodoListActivity.this);
-                onAddItem(v);
+                onAddItem();
             }
         });
 
@@ -60,8 +57,8 @@ public class TodoListActivity extends AppCompatActivity {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                todoItems.remove(position);
-                arrayTodoAdapter.notifyDataSetChanged();
+                GlobalData.todoItems.remove(position);
+                toDoListAdapter.notifyDataSetChanged();
                 writeItems();
                 return true;
             }
@@ -73,7 +70,7 @@ public class TodoListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intentEdit = new Intent(TodoListActivity.this, EditActivity.class);
                 intentEdit.putExtra(GlobalData.INDEX_KEY, position);
-                intentEdit.putExtra(GlobalData.ITEM_KEY, todoItems.get(position));
+                intentEdit.putExtra(GlobalData.ITEM_KEY, GlobalData.todoItems.get(position));
                 startActivityForResult(intentEdit, GlobalData.REQUEST_CODE);
             }
         });
@@ -91,21 +88,17 @@ public class TodoListActivity extends AppCompatActivity {
     }
 
     private  void populateTodoItems() {
-        todoItems = new ArrayList<>();
-        readItems();
-        arrayTodoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoItems); // TODO: check
+        GlobalData.todoItems = (ArrayList<ToDoItem>) ToDoItem.loadAll(this);
+        toDoListAdapter = new ToDoListAdapter(this, GlobalData.todoItems);
     }
 
-    //TODO: remove view if its not needed
-    private void onAddItem(View view) {
-        //view in this case will be button
-
+    private void onAddItem() {
         String itemValue = edEditText.getText().toString();
         if (itemValue == null || itemValue.trim().isEmpty()) {
             edEditText.setText("");
             return;
         }
-        arrayTodoAdapter.add(itemValue.trim());
+        toDoListAdapter.add(new ToDoItem(itemValue.trim()));
         edEditText.setText("");
         writeItems();
     }
@@ -114,26 +107,21 @@ public class TodoListActivity extends AppCompatActivity {
         File filesDir = getFilesDir();
         File file = new File(filesDir, GlobalData.FILE_NAME);
         try {
-            todoItems = new ArrayList<>(FileUtils.readLines(file));
+            List<String> lines = FileUtils.readLines(file);
+            GlobalData.todoItems = new ArrayList<ToDoItem>();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void onUpdateItem(String newVal, int index) {
-        todoItems.remove(index);
-        todoItems.add(index, newVal);
-        arrayTodoAdapter.notifyDataSetChanged();
+        GlobalData.todoItems.remove(index);
+        GlobalData.todoItems.add(index, new ToDoItem(newVal));
+        toDoListAdapter.notifyDataSetChanged();
         writeItems();
     }
 
     private void writeItems() {
-        File filesDir = getFilesDir();
-        File file = new File(filesDir, GlobalData.FILE_NAME);
-        try {
-            FileUtils.writeLines(file, todoItems);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ToDoItem.saveAll(this, GlobalData.todoItems);
     }
 }

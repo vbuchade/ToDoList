@@ -19,4 +19,15 @@ public final class Utils {
         InputMethodManager imm =(InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    public static String capitalizeString(String str) {
+        if(str != null && !str.trim().isEmpty()) {
+            if(str.length() > 1) {
+                str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
+            } else {
+                str = str.toUpperCase();
+            }
+        }
+        return str;
+    }
 }

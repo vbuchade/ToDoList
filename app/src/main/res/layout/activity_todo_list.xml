@@ -13,10 +13,23 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btnAddItem"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="26dp"
-        android:id="@+id/lvItems" />
+        android:id="@+id/lvItems"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btnAddItem" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/btnAddItem"
+        android:text="@string/add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="21dp"
+        android:layout_marginEnd="21dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -24,22 +37,11 @@
         android:inputType="textPersonName"
         android:imeOptions="actionDone"
         android:ems="10"
-        android:layout_alignBottom="@+id/btnAddItem"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/etEditText"
-        android:hint="@string/add_item" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/btnAddItem"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:text="@string/add"
+        android:hint="@string/add_item"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/etEditText"
-        android:layout_toEndOf="@+id/etEditText" />
+        android:layout_toLeftOf="@+id/btnAddItem"
+        android:layout_toStartOf="@+id/btnAddItem"
+        android:layout_below="@+id/lvItems" />
 
 </RelativeLayout>
